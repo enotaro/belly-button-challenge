@@ -61,25 +61,28 @@ function drawCharts(id) {
 // Fetch demographic info
 function showDemographics(id) {
 
-    // Read in the JSON data
+    // Read in the JSON data from the provided URL
     d3.json(url).then(function(item){
 
+        // Sort through the metadata and filter it to find an entry that matches the selected ID
         let metadata = item.metadata;
-
         selectedID = metadata.filter(item => item.id == id);
         let chooseSample = selectedID[0];
 
-        let panel = d3.select("#sample-metadata");
-        panel.html("");
+        let sampleMetadata = d3.select("#sample-metadata");
 
+        // Clear the data by setting it to an empty string
+        sampleMetadata.html("");
+
+        // Display demographic info as key-value pairs
         Object.entries(chooseSample).forEach(([key,value]) =>{
-            panel.append('div').text(`${key}: ${value}`);
+            sampleMetadata.append('div').text(`${key}: ${value}`);
         })
     })
 }
 
 function init() {
-    // Read in the JSON data from the specified URL
+    // Read in the JSON data from the provided URL
     d3.json(url)
         .then(function(data) {
             // Get the list of names from the JSON data
